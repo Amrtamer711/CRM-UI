@@ -9,6 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^12.5.0",
+    "lucide-react": "^0.556.0",
     "next": "16.0.8",
     "react": "19.2.1",
     "react-dom": "19.2.1"
