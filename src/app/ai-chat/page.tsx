@@ -20,6 +20,9 @@ import {
   Plus,
   PanelLeftClose,
   Check,
+  Brain,
+  Zap,
+  ArrowUpRight,
 } from 'lucide-react';
 
 interface Message {
@@ -40,10 +43,10 @@ interface Message {
 }
 
 const suggestions = [
-  { text: 'Analyze my pipeline', icon: TrendingUp },
-  { text: 'Who should I contact today?', icon: Users },
-  { text: 'Revenue forecast for Q4', icon: DollarSign },
-  { text: 'Optimize my schedule', icon: Calendar },
+  { text: 'Analyze my pipeline', icon: TrendingUp, color: 'var(--indigo-500)' },
+  { text: 'Who should I contact today?', icon: Users, color: 'var(--cyan-500)' },
+  { text: 'Revenue forecast for Q4', icon: DollarSign, color: 'var(--emerald-500)' },
+  { text: 'Optimize my schedule', icon: Calendar, color: 'var(--purple-500)' },
 ];
 
 const dummyResponses: Record<string, Message> = {
@@ -196,7 +199,7 @@ export default function AIChatPage() {
       if (line.startsWith('• ')) {
         return (
           <div key={i} className="flex gap-2 ml-1">
-            <span className="text-[var(--void-500)]">•</span>
+            <span className="text-[var(--indigo-400)]">•</span>
             <span dangerouslySetInnerHTML={{ __html: formatted.substring(2) }} />
           </div>
         );
@@ -206,7 +209,7 @@ export default function AIChatPage() {
       if (numMatch) {
         return (
           <div key={i} className="flex gap-2 ml-1">
-            <span className="text-[var(--void-500)] min-w-[1.25rem]">{numMatch[1]}.</span>
+            <span className="text-[var(--indigo-400)] min-w-[1.25rem]">{numMatch[1]}.</span>
             <span dangerouslySetInnerHTML={{ __html: formatted.substring(numMatch[0].length) }} />
           </div>
         );
@@ -221,100 +224,201 @@ export default function AIChatPage() {
   const hasMessages = messages.length > 0;
 
   return (
-    <div className="h-screen bg-[var(--void-950)] flex flex-col">
-      {/* Subtle background */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[var(--void-900)] via-[var(--void-950)] to-[var(--void-950)]" />
+    <div className="h-screen bg-[var(--void-950)] flex flex-col relative">
+      {/* Advanced ambient effects */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Primary glow orbs with liquid animation */}
+        <div
+          className="absolute top-1/4 left-1/3 w-[600px] h-[600px] bg-[var(--indigo-500)] rounded-full opacity-[0.04] blur-[120px]"
+          style={{ animation: 'liquid 20s ease-in-out infinite' }}
+        />
+        <div
+          className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[var(--purple-500)] rounded-full opacity-[0.03] blur-[100px]"
+          style={{ animation: 'liquid 25s ease-in-out infinite reverse' }}
+        />
+        <div
+          className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[var(--cyan-500)] rounded-full opacity-[0.03] blur-[80px]"
+          style={{ animation: 'liquid 18s ease-in-out infinite 2s' }}
+        />
       </div>
+      <div className="fixed inset-0 bg-grid pointer-events-none opacity-30" />
 
-      {/* Header - minimal */}
-      <header className="relative z-10 flex-shrink-0 h-14 flex items-center justify-between px-4 border-b border-[var(--void-800)]/50">
-        <div className="flex items-center gap-3">
-          <button className="p-2 rounded-lg hover:bg-[var(--void-800)] text-[var(--void-400)] hover:text-[var(--void-200)] transition-colors">
-            <PanelLeftClose className="w-5 h-5" />
-          </button>
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-white" />
+      {/* Header with premium styling */}
+      <header className="relative z-10 flex-shrink-0">
+        {/* Glass morphism background */}
+        <div className="absolute inset-0 bg-[var(--void-950)]/70 backdrop-blur-2xl" />
+
+        {/* Bottom border with gradient */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--void-700)] to-transparent" />
+
+        <div className="relative h-14 flex items-center justify-between px-4">
+          <div className="flex items-center gap-3">
+            <button className="group p-2 rounded-xl hover:bg-[var(--void-800)]/80 text-[var(--void-400)] hover:text-[var(--void-200)] transition-all">
+              <PanelLeftClose className="w-5 h-5" />
+            </button>
+            <div className="flex items-center gap-3">
+              {/* Premium AI icon */}
+              <div className="relative">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center shadow-lg shadow-[var(--indigo-500)]/25">
+                  <Brain className="w-4 h-4 text-white" />
+                </div>
+                {/* Live indicator */}
+                <div className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5">
+                  <div className="absolute inset-0 bg-[var(--emerald-400)] rounded-full" />
+                  <div className="absolute inset-0 bg-[var(--emerald-400)] rounded-full animate-ping opacity-75" />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-[var(--void-100)]">Nexus AI</span>
+                  <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider bg-gradient-to-r from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 text-[var(--indigo-400)] rounded border border-[var(--indigo-500)]/30">
+                    Pro
+                  </span>
+                </div>
+                <p className="text-[10px] text-[var(--void-500)]">Powered by advanced AI</p>
+              </div>
             </div>
-            <span className="font-medium text-[var(--void-100)]">Nexus AI</span>
           </div>
+          <button className="group p-2 rounded-xl hover:bg-[var(--void-800)]/80 text-[var(--void-400)] hover:text-[var(--void-200)] transition-all">
+            <Plus className="w-5 h-5" />
+          </button>
         </div>
-        <button className="p-2 rounded-lg hover:bg-[var(--void-800)] text-[var(--void-400)] hover:text-[var(--void-200)] transition-colors">
-          <Plus className="w-5 h-5" />
-        </button>
       </header>
 
       {/* Main content */}
       <main className="relative z-10 flex-1 overflow-hidden">
         {!hasMessages ? (
-          /* Empty State - Clean welcome */
+          /* Empty State - Premium welcome */
           <div className="h-full flex flex-col items-center justify-center px-4">
             <div className="max-w-2xl w-full text-center">
-              {/* Logo */}
-              <div className="mb-8">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center mx-auto shadow-lg shadow-[var(--indigo-500)]/20">
-                  <Sparkles className="w-8 h-8 text-white" />
+              {/* Premium Logo with effects */}
+              <div className="mb-8 relative">
+                <div className="relative w-20 h-20 mx-auto">
+                  {/* Outer glow ring */}
+                  <div
+                    className="absolute inset-0 rounded-2xl"
+                    style={{
+                      background: 'conic-gradient(from 0deg, var(--indigo-500), var(--purple-500), var(--cyan-500), var(--indigo-500))',
+                      padding: '2px',
+                      animation: 'spin-slow 8s linear infinite',
+                    }}
+                  >
+                    <div className="absolute inset-[2px] rounded-2xl bg-[var(--void-900)]" />
+                  </div>
+
+                  {/* Main icon container */}
+                  <div className="absolute inset-1 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center shadow-2xl shadow-[var(--indigo-500)]/30">
+                    <Brain className="w-9 h-9 text-white" />
+                  </div>
+
+                  {/* Sparkle accents */}
+                  <Sparkles
+                    className="absolute -top-2 -right-2 w-5 h-5 text-[var(--amber-400)]"
+                    style={{ animation: 'glow-pulse 2s ease-in-out infinite' }}
+                  />
                 </div>
               </div>
 
-              {/* Title */}
-              <h1 className="text-3xl font-semibold text-[var(--void-50)] mb-3">
+              {/* Title with gradient */}
+              <h1 className="text-3xl font-display font-semibold text-[var(--void-50)] mb-3">
                 What can I help with?
               </h1>
               <p className="text-[var(--void-400)] mb-10 text-lg">
                 Ask about your pipeline, contacts, forecasts, or anything in your CRM.
               </p>
 
-              {/* Suggestion cards */}
-              <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
+              {/* Premium suggestion cards */}
+              <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
                 {suggestions.map((suggestion, index) => (
                   <button
                     key={index}
                     onClick={() => handleSuggestionClick(suggestion.text)}
-                    className="group flex items-center gap-3 p-4 rounded-xl bg-[var(--void-800)]/40 hover:bg-[var(--void-800)]/70 border border-[var(--void-800)] hover:border-[var(--void-700)] transition-all text-left"
+                    className="group relative rounded-xl overflow-hidden text-left transition-all duration-300"
+                    style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    <div className="w-9 h-9 rounded-lg bg-[var(--void-800)] group-hover:bg-[var(--void-700)] flex items-center justify-center transition-colors">
-                      <suggestion.icon className="w-4 h-4 text-[var(--void-400)] group-hover:text-[var(--void-300)]" />
+                    {/* Conic gradient border on hover */}
+                    <div
+                      className="absolute inset-0 rounded-xl p-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: `conic-gradient(from 0deg, ${suggestion.color}, ${suggestion.color}40, ${suggestion.color}80, ${suggestion.color}40, ${suggestion.color})` }}
+                    >
+                      <div className="absolute inset-[1px] rounded-xl bg-[var(--void-850)]" />
                     </div>
-                    <span className="text-sm text-[var(--void-300)] group-hover:text-[var(--void-100)] transition-colors flex-1">
-                      {suggestion.text}
-                    </span>
+
+                    <div className="relative flex items-center gap-3 p-4 rounded-xl bg-[var(--void-850)]/80 backdrop-blur-sm border border-[var(--void-700)]/50 group-hover:border-transparent transition-all duration-300">
+                      {/* Chrome reflection */}
+                      <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white/[0.02] to-transparent rounded-t-xl pointer-events-none" />
+
+                      {/* Ambient glow */}
+                      <div
+                        className="absolute -top-10 -right-10 w-24 h-24 rounded-full opacity-0 blur-[40px] group-hover:opacity-30 transition-all duration-500"
+                        style={{ background: suggestion.color }}
+                      />
+
+                      <div
+                        className="relative z-10 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                        style={{
+                          background: `linear-gradient(135deg, ${suggestion.color}20, ${suggestion.color}10)`,
+                          boxShadow: `0 0 0 1px ${suggestion.color}25`,
+                        }}
+                      >
+                        <suggestion.icon className="w-5 h-5" style={{ color: suggestion.color }} />
+                      </div>
+                      <span className="relative z-10 text-sm text-[var(--void-300)] group-hover:text-[var(--void-100)] transition-colors flex-1">
+                        {suggestion.text}
+                      </span>
+                      <ArrowUpRight className="relative z-10 w-4 h-4 text-[var(--void-600)] opacity-0 group-hover:opacity-100 group-hover:text-[var(--void-400)] transition-all transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
                   </button>
                 ))}
               </div>
             </div>
           </div>
         ) : (
-          /* Messages */
+          /* Messages with premium styling */
           <div className="h-full overflow-y-auto">
             <div className="max-w-3xl mx-auto px-4 py-8">
-              {messages.map((message) => (
-                <div key={message.id} className="mb-8 last:mb-4">
+              {messages.map((message, msgIndex) => (
+                <div
+                  key={message.id}
+                  className="mb-8 last:mb-4 opacity-0 animate-fade-in"
+                  style={{ animationDelay: `${msgIndex * 50}ms`, animationFillMode: 'forwards' }}
+                >
                   {message.role === 'user' ? (
-                    /* User message */
+                    /* User message with premium styling */
                     <div className="flex justify-end">
-                      <div className="max-w-[85%] bg-[var(--indigo-500)] text-white px-4 py-3 rounded-2xl rounded-br-md">
-                        <p className="text-[15px] leading-relaxed">{message.content}</p>
+                      <div className="relative max-w-[85%] rounded-2xl rounded-br-md overflow-hidden">
+                        {/* Gradient background */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)]" />
+                        {/* Shimmer overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-50" />
+                        <div className="relative px-4 py-3">
+                          <p className="text-[15px] leading-relaxed text-white">{message.content}</p>
+                        </div>
                       </div>
                     </div>
                   ) : (
-                    /* Assistant message */
+                    /* Assistant message with premium styling */
                     <div className="space-y-4">
                       <div className="flex gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center">
-                          <Sparkles className="w-4 h-4 text-white" />
+                        {/* AI Avatar */}
+                        <div className="relative flex-shrink-0">
+                          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center shadow-lg shadow-[var(--indigo-500)]/20">
+                            <Brain className="w-4 h-4 text-white" />
+                          </div>
+                          {/* Pulse effect */}
+                          <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)] animate-ping opacity-20" style={{ animationDuration: '3s' }} />
                         </div>
+
                         <div className="flex-1 min-w-0">
                           <div className="text-[15px] leading-relaxed text-[var(--void-200)] space-y-1">
                             {formatContent(message.content)}
                           </div>
 
-                          {/* Action buttons */}
+                          {/* Premium action buttons */}
                           <div className="flex items-center gap-1 mt-4">
                             <button
                               onClick={() => copyToClipboard(message.content, message.id)}
-                              className="p-1.5 rounded-md hover:bg-[var(--void-800)] text-[var(--void-500)] hover:text-[var(--void-300)] transition-colors"
+                              className="group p-2 rounded-lg hover:bg-[var(--void-800)]/80 text-[var(--void-500)] hover:text-[var(--void-300)] transition-all"
                               title="Copy"
                             >
                               {copiedId === message.id ? (
@@ -324,35 +428,41 @@ export default function AIChatPage() {
                               )}
                             </button>
                             <button
-                              className="p-1.5 rounded-md hover:bg-[var(--void-800)] text-[var(--void-500)] hover:text-[var(--void-300)] transition-colors"
+                              className="group p-2 rounded-lg hover:bg-[var(--void-800)]/80 text-[var(--void-500)] hover:text-[var(--emerald-400)] transition-all"
                               title="Good response"
                             >
                               <ThumbsUp className="w-4 h-4" />
                             </button>
                             <button
-                              className="p-1.5 rounded-md hover:bg-[var(--void-800)] text-[var(--void-500)] hover:text-[var(--void-300)] transition-colors"
+                              className="group p-2 rounded-lg hover:bg-[var(--void-800)]/80 text-[var(--void-500)] hover:text-[var(--rose-400)] transition-all"
                               title="Bad response"
                             >
                               <ThumbsDown className="w-4 h-4" />
                             </button>
                             <button
-                              className="p-1.5 rounded-md hover:bg-[var(--void-800)] text-[var(--void-500)] hover:text-[var(--void-300)] transition-colors"
+                              className="group p-2 rounded-lg hover:bg-[var(--void-800)]/80 text-[var(--void-500)] hover:text-[var(--void-300)] transition-all"
                               title="Regenerate"
                             >
                               <RefreshCw className="w-4 h-4" />
                             </button>
                           </div>
 
-                          {/* Suggestions */}
+                          {/* Premium suggestion pills */}
                           {message.suggestions && message.suggestions.length > 0 && (
                             <div className="flex flex-wrap gap-2 mt-4">
                               {message.suggestions.map((suggestion, idx) => (
                                 <button
                                   key={idx}
                                   onClick={() => handleSuggestionClick(suggestion)}
-                                  className="px-3 py-1.5 rounded-full bg-[var(--void-800)]/60 hover:bg-[var(--void-800)] border border-[var(--void-700)]/50 hover:border-[var(--void-600)] text-sm text-[var(--void-300)] hover:text-[var(--void-100)] transition-all"
+                                  className="group relative px-3 py-1.5 rounded-full overflow-hidden text-sm transition-all duration-300"
                                 >
-                                  {suggestion}
+                                  {/* Background with hover effect */}
+                                  <div className="absolute inset-0 bg-[var(--void-800)]/60 border border-[var(--void-700)]/50 rounded-full group-hover:bg-[var(--void-800)] group-hover:border-[var(--indigo-500)]/30 transition-all" />
+                                  {/* Glow on hover */}
+                                  <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ boxShadow: '0 0 20px rgba(99, 102, 241, 0.15)' }} />
+                                  <span className="relative z-10 text-[var(--void-300)] group-hover:text-[var(--void-100)] transition-colors">
+                                    {suggestion}
+                                  </span>
                                 </button>
                               ))}
                             </div>
@@ -364,19 +474,22 @@ export default function AIChatPage() {
                 </div>
               ))}
 
-              {/* Typing indicator */}
+              {/* Premium typing indicator */}
               {isTyping && (
-                <div className="mb-8">
+                <div className="mb-8 opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
                   <div className="flex gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-white" />
-                    </div>
-                    <div className="flex items-center gap-1 py-3">
-                      <div className="flex gap-1">
-                        <span className="w-2 h-2 rounded-full bg-[var(--void-500)] animate-pulse" style={{ animationDelay: '0ms' }} />
-                        <span className="w-2 h-2 rounded-full bg-[var(--void-500)] animate-pulse" style={{ animationDelay: '150ms' }} />
-                        <span className="w-2 h-2 rounded-full bg-[var(--void-500)] animate-pulse" style={{ animationDelay: '300ms' }} />
+                    <div className="relative flex-shrink-0">
+                      <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] flex items-center justify-center">
+                        <Brain className="w-4 h-4 text-white" />
                       </div>
+                    </div>
+                    <div className="flex items-center gap-2 py-3 px-4 bg-[var(--void-850)]/80 rounded-xl border border-[var(--void-700)]/50">
+                      <div className="flex gap-1">
+                        <span className="w-2 h-2 rounded-full bg-[var(--indigo-400)]" style={{ animation: 'bounce 1s infinite', animationDelay: '0ms' }} />
+                        <span className="w-2 h-2 rounded-full bg-[var(--indigo-400)]" style={{ animation: 'bounce 1s infinite', animationDelay: '150ms' }} />
+                        <span className="w-2 h-2 rounded-full bg-[var(--indigo-400)]" style={{ animation: 'bounce 1s infinite', animationDelay: '300ms' }} />
+                      </div>
+                      <span className="text-xs text-[var(--void-500)]">Thinking...</span>
                     </div>
                   </div>
                 </div>
@@ -388,30 +501,56 @@ export default function AIChatPage() {
         )}
       </main>
 
-      {/* Input area - floating style */}
+      {/* Premium input area */}
       <footer className="relative z-10 flex-shrink-0 px-4 pb-6 pt-2">
         <div className="max-w-3xl mx-auto">
-          <div className="relative bg-[var(--void-800)]/80 backdrop-blur-xl border border-[var(--void-700)]/50 rounded-2xl shadow-lg shadow-black/20">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Message Nexus AI..."
-              rows={1}
-              className="w-full px-4 py-4 pr-14 bg-transparent text-[var(--void-100)] placeholder:text-[var(--void-500)] focus:outline-none resize-none text-[15px] leading-relaxed max-h-[200px]"
-            />
-            <button
-              onClick={handleSend}
-              disabled={!input.trim()}
-              className="absolute right-2 bottom-2 p-2 rounded-xl bg-[var(--void-100)] hover:bg-white disabled:bg-[var(--void-700)] disabled:text-[var(--void-500)] text-[var(--void-900)] transition-all disabled:cursor-not-allowed"
+          <div className="relative rounded-2xl overflow-hidden">
+            {/* Gradient border */}
+            <div
+              className="absolute inset-0 rounded-2xl p-[1px] opacity-50"
+              style={{ background: 'linear-gradient(135deg, var(--void-600), var(--void-800), var(--void-600))' }}
             >
-              <ArrowUp className="w-5 h-5" />
-            </button>
+              <div className="absolute inset-[1px] rounded-2xl bg-[var(--void-850)]" />
+            </div>
+
+            <div className="relative bg-[var(--void-850)]/90 backdrop-blur-2xl rounded-2xl shadow-2xl shadow-black/30">
+              {/* Chrome reflection */}
+              <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white/[0.02] to-transparent rounded-t-2xl pointer-events-none" />
+
+              <textarea
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Message Nexus AI..."
+                rows={1}
+                className="relative z-10 w-full px-4 py-4 pr-14 bg-transparent text-[var(--void-100)] placeholder:text-[var(--void-500)] focus:outline-none resize-none text-[15px] leading-relaxed max-h-[200px]"
+              />
+
+              {/* Premium send button */}
+              <button
+                onClick={handleSend}
+                disabled={!input.trim()}
+                className="absolute right-2 bottom-2 group p-2.5 rounded-xl transition-all disabled:cursor-not-allowed overflow-hidden"
+              >
+                {/* Button background */}
+                <div className={`absolute inset-0 rounded-xl transition-all ${input.trim() ? 'bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-600)] shadow-lg shadow-[var(--indigo-500)]/30' : 'bg-[var(--void-700)]'}`} />
+                {/* Shimmer on hover */}
+                {input.trim() && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                )}
+                <ArrowUp className={`w-5 h-5 relative z-10 ${input.trim() ? 'text-white' : 'text-[var(--void-500)]'}`} />
+              </button>
+            </div>
           </div>
-          <p className="text-center text-xs text-[var(--void-600)] mt-3">
-            Nexus AI can make mistakes. Consider checking important information.
-          </p>
+
+          {/* Footer text with subtle styling */}
+          <div className="flex items-center justify-center gap-2 mt-3">
+            <Sparkles className="w-3 h-3 text-[var(--void-600)]" />
+            <p className="text-xs text-[var(--void-600)]">
+              Nexus AI can make mistakes. Consider checking important information.
+            </p>
+          </div>
         </div>
       </footer>
     </div>

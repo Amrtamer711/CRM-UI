@@ -21,6 +21,8 @@ import {
   Brain,
   Zap,
   Activity,
+  BarChart3,
+  Cpu,
 } from 'lucide-react';
 import type { Deal, Activity as ActivityType, Contact } from '@/lib/db';
 
@@ -47,10 +49,10 @@ const stageLabels: Record<string, string> = {
   won: 'Won',
 };
 const stageColors: Record<string, string> = {
-  lead: 'var(--void-400)',
-  qualified: 'var(--cyan-400)',
-  proposal: 'var(--indigo-400)',
-  negotiation: 'var(--purple-400)',
+  lead: 'var(--void-500)',
+  qualified: 'var(--void-400)',
+  proposal: 'var(--void-300)',
+  negotiation: 'var(--void-200)',
   won: 'var(--emerald-400)',
 };
 
@@ -84,22 +86,43 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--void-950)]">
-        <div className="flex flex-col items-center gap-4">
-          <div className="relative w-16 h-16">
-            {/* Outer ring */}
-            <div className="absolute inset-0 border-2 border-[var(--void-700)] rounded-full" />
-            {/* Spinning gradient */}
-            <div className="absolute inset-0 border-2 border-transparent rounded-full animate-spin" style={{ borderTopColor: 'var(--indigo-500)', borderRightColor: 'var(--purple-500)' }} />
-            {/* Inner glow */}
-            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 animate-pulse" />
+        <div className="flex flex-col items-center gap-6">
+          {/* Sophisticated loader */}
+          <div className="relative w-24 h-24">
+            {/* Outer rotating ring */}
+            <div className="absolute inset-0 rounded-full border-2 border-[var(--void-700)]" />
+            <div
+              className="absolute inset-0 rounded-full border-2 border-transparent animate-spin-slow"
+              style={{
+                borderTopColor: 'var(--void-200)',
+                borderRightColor: 'var(--void-300)',
+                animationDuration: '2s',
+              }}
+            />
+            {/* Middle ring - reverse spin */}
+            <div
+              className="absolute inset-3 rounded-full border border-transparent animate-spin-reverse"
+              style={{
+                borderTopColor: 'var(--void-400)',
+                borderLeftColor: 'var(--void-400)',
+                opacity: 0.5,
+                animationDuration: '3s',
+              }}
+            />
+            {/* Inner glow orb */}
+            <div className="absolute inset-6 rounded-full bg-gradient-to-br from-white/10 to-white/5 animate-pulse" />
             {/* AI icon */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <Brain className="w-6 h-6 text-[var(--indigo-400)]" />
+              <Brain className="w-8 h-8 text-[var(--void-200)]" />
+            </div>
+            {/* Orbiting dot */}
+            <div className="absolute inset-0 animate-spin-slow" style={{ animationDuration: '3s' }}>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-2 h-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
             </div>
           </div>
           <div className="text-center">
-            <p className="text-[var(--void-100)] font-medium">Initializing Dashboard</p>
-            <p className="text-[var(--void-400)] text-sm mt-1">Loading your data...</p>
+            <p className="font-display text-lg text-[var(--void-50)] tracking-tight">Initializing Dashboard</p>
+            <p className="text-[var(--void-400)] text-sm mt-2">AI is analyzing your data...</p>
           </div>
         </div>
       </div>
@@ -129,64 +152,116 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[var(--void-950)] relative">
-      {/* Animated ambient background effects */}
+      {/* Advanced ambient background effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[var(--indigo-500)] rounded-full opacity-[0.04] blur-[120px] animate-glow-breathe" />
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[var(--purple-500)] rounded-full opacity-[0.04] blur-[100px] animate-glow-breathe" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[var(--cyan-500)] rounded-full opacity-[0.03] blur-[80px] animate-glow-breathe" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/4 left-0 w-[300px] h-[300px] bg-[var(--emerald-500)] rounded-full opacity-[0.02] blur-[60px] animate-glow-breathe" style={{ animationDelay: '3s' }} />
+        {/* Primary glow orbs with morphing - subtle white */}
+        <div
+          className="absolute -top-40 right-1/4 w-[700px] h-[700px] bg-white rounded-full opacity-[0.02] blur-[150px] animate-liquid"
+        />
+        <div
+          className="absolute top-1/2 -left-40 w-[500px] h-[500px] bg-white rounded-full opacity-[0.015] blur-[120px] animate-liquid"
+          style={{ animationDelay: '2s' }}
+        />
+        <div
+          className="absolute -bottom-20 right-1/3 w-[600px] h-[600px] bg-white rounded-full opacity-[0.015] blur-[130px] animate-liquid"
+          style={{ animationDelay: '4s' }}
+        />
+        <div
+          className="absolute top-1/4 right-0 w-[400px] h-[400px] bg-[var(--emerald-500)] rounded-full opacity-[0.02] blur-[100px] animate-liquid"
+          style={{ animationDelay: '6s' }}
+        />
+
+        {/* Subtle animated lines */}
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent" />
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
       </div>
 
       {/* Mesh gradient overlay */}
-      <div className="fixed inset-0 bg-mesh pointer-events-none opacity-50" />
+      <div className="fixed inset-0 bg-mesh pointer-events-none opacity-60" />
 
       {/* Grid overlay */}
-      <div className="fixed inset-0 bg-grid pointer-events-none opacity-30" />
+      <div className="fixed inset-0 bg-grid pointer-events-none opacity-40" />
+
+      {/* Noise texture */}
+      <div className="fixed inset-0 bg-noise pointer-events-none" />
 
       <div className="relative z-10">
         <Header
-          title="Dashboard"
-          subtitle="Welcome back. Here's your AI-powered pipeline overview."
+          title="Command Center"
+          subtitle="AI-powered insights at a glance"
         />
 
         <div className="p-8 space-y-8">
-          {/* AI Status Banner */}
-          <div className="relative overflow-hidden bg-gradient-to-r from-[var(--indigo-500)]/10 via-[var(--purple-500)]/10 to-[var(--cyan-500)]/10 border border-[var(--indigo-500)]/20 rounded-2xl p-4 opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/5 to-transparent animate-gradient" style={{ backgroundSize: '200% 100%' }} />
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center">
-                    <Brain className="w-6 h-6 text-white" />
+          {/* AI Neural Banner - Premium */}
+          <div
+            className="relative overflow-hidden rounded-2xl opacity-0 animate-reveal-up"
+            style={{ animationFillMode: 'forwards' }}
+          >
+            {/* Animated gradient border */}
+            <div className="absolute inset-0 rounded-2xl p-[1px] bg-gradient-to-r from-[var(--void-500)] via-[var(--void-300)] to-[var(--void-500)] animate-gradient" style={{ backgroundSize: '200% 200%' }}>
+              <div className="absolute inset-[1px] rounded-2xl bg-[var(--void-900)]" />
+            </div>
+
+            <div className="relative bg-gradient-to-r from-white/[0.03] via-white/[0.02] to-white/[0.03] p-5">
+              {/* Holographic shimmer */}
+              <div className="absolute inset-0 holo-shimmer" />
+
+              {/* Scan line effect */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" style={{ animation: 'scan-line 4s linear infinite' }} />
+              </div>
+
+              <div className="relative z-10 flex items-center justify-between">
+                <div className="flex items-center gap-5">
+                  {/* AI Core Icon */}
+                  <div className="relative">
+                    <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-white/20">
+                      <Cpu className="w-7 h-7 text-[var(--void-950)]" />
+                    </div>
+                    {/* Pulse rings */}
+                    <div className="absolute inset-0 rounded-xl bg-white animate-ping opacity-20" style={{ animationDuration: '2s' }} />
+                    {/* Status indicator */}
+                    <div className="absolute -top-1 -right-1 w-4 h-4">
+                      <div className="absolute inset-0 bg-[var(--emerald-400)] rounded-full" />
+                      <div className="absolute inset-0 bg-[var(--emerald-400)] rounded-full animate-ping opacity-60" />
+                    </div>
                   </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--emerald-400)] rounded-full flex items-center justify-center">
-                    <Zap className="w-2.5 h-2.5 text-[var(--void-900)]" />
+
+                  <div>
+                    <div className="flex items-center gap-3">
+                      <h3 className="font-display text-lg font-bold text-[var(--void-50)]">Neural Engine Online</h3>
+                      <span className="px-2.5 py-1 bg-[var(--emerald-500)]/15 text-[var(--emerald-400)] text-[10px] font-bold tracking-wider uppercase rounded-full border border-[var(--emerald-500)]/30">
+                        Active
+                      </span>
+                    </div>
+                    <p className="text-sm text-[var(--void-300)] mt-1">Real-time analysis of 3 pipeline opportunities</p>
                   </div>
                 </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-display font-bold text-[var(--void-50)]">AI Assistant Active</h3>
-                    <span className="px-2 py-0.5 bg-[var(--emerald-500)]/20 text-[var(--emerald-400)] text-xs font-medium rounded-full">Online</span>
+
+                <div className="flex items-center gap-4">
+                  {/* Insights count */}
+                  <div className="flex items-center gap-2 px-4 py-2 bg-[var(--void-800)]/60 border border-[var(--void-700)]/50 rounded-xl backdrop-blur-sm">
+                    <Sparkles className="w-4 h-4 text-[var(--void-200)]" />
+                    <span className="text-sm font-semibold text-[var(--void-100)]">3 Insights</span>
                   </div>
-                  <p className="text-sm text-[var(--void-300)]">3 new insights available based on your pipeline activity</p>
+
+                  <button className="group flex items-center gap-2 px-5 py-2.5 bg-[var(--void-800)]/80 hover:bg-[var(--void-700)] border border-[var(--void-600)]/50 rounded-xl text-sm font-semibold text-[var(--void-50)] transition-all duration-300 hover:border-white/20">
+                    <span>View Analysis</span>
+                    <ArrowRight className="w-4 h-4 text-[var(--void-400)] group-hover:text-white group-hover:translate-x-1 transition-all" />
+                  </button>
                 </div>
               </div>
-              <button className="flex items-center gap-2 px-4 py-2 bg-[var(--void-800)]/80 hover:bg-[var(--void-700)] border border-[var(--void-600)] rounded-xl text-sm font-medium text-[var(--void-100)] transition-all group">
-                <Sparkles className="w-4 h-4 text-[var(--indigo-400)]" />
-                <span>View Insights</span>
-                <ArrowRight className="w-4 h-4 text-[var(--void-400)] group-hover:translate-x-1 transition-transform" />
-              </button>
             </div>
           </div>
 
-          {/* Stats Grid */}
+          {/* Stats Grid - Premium Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <StatCard
               title="Total Contacts"
               value={data.stats.totalContacts}
               change={12}
               icon={Users}
-              iconColor="var(--indigo-500)"
+              iconColor="var(--void-100)"
               delay={0}
             />
             <StatCard
@@ -194,7 +269,7 @@ export default function Dashboard() {
               value={data.stats.totalCompanies}
               change={8}
               icon={Building2}
-              iconColor="var(--cyan-500)"
+              iconColor="var(--void-200)"
               delay={80}
             />
             <StatCard
@@ -202,7 +277,7 @@ export default function Dashboard() {
               value={formatCurrency(data.stats.totalDealValue)}
               change={24}
               icon={DollarSign}
-              iconColor="var(--purple-500)"
+              iconColor="var(--void-100)"
               delay={160}
             />
             <StatCard
@@ -236,21 +311,21 @@ export default function Dashboard() {
               target={1000000}
               title="Q4 Revenue Target"
               subtitle="Quarterly goal"
-              color="#6366f1"
+              color="#cccccc"
             />
             <RadialChart
               value={42}
               target={50}
               title="New Leads"
               subtitle="Monthly target"
-              color="#22d3ee"
+              color="#999999"
             />
             <RadialChart
               value={28}
               target={30}
               title="Deals Closed"
               subtitle="This quarter"
-              color="#a855f7"
+              color="#777777"
             />
             <RadialChart
               value={89}
@@ -261,73 +336,90 @@ export default function Dashboard() {
             />
           </div>
 
-          {/* Pipeline Overview */}
-          <div className="relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
-            {/* Background effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)]/5 via-transparent to-[var(--purple-500)]/5" />
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-[var(--indigo-500)] rounded-full opacity-10 blur-[60px]" />
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--indigo-500)]/50 to-transparent" />
+          {/* Pipeline Overview - Premium */}
+          <div
+            className="relative rounded-2xl overflow-hidden opacity-0 animate-fade-in"
+            style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}
+          >
+            {/* Gradient border effect */}
+            <div className="absolute inset-0 rounded-2xl p-[1px]">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/15 via-transparent to-white/10" />
+            </div>
 
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Pipeline Overview</h2>
-                    <p className="text-sm text-[var(--void-400)]">Deal stages and values</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--emerald-500)]/10 border border-[var(--emerald-500)]/30 rounded-full">
-                  <TrendingUp className="w-4 h-4 text-[var(--emerald-400)]" />
-                  <span className="text-[var(--emerald-400)] text-sm font-semibold">+24%</span>
-                  <span className="text-[var(--void-400)] text-sm">this month</span>
-                </div>
-              </div>
+            <div className="relative bg-[var(--void-850)]/80 backdrop-blur-2xl border border-[var(--void-700)]/50 rounded-2xl p-7">
+              {/* Chrome reflection */}
+              <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white/[0.02] to-transparent rounded-t-2xl pointer-events-none" />
 
-              {/* Pipeline bars */}
-              <div className="space-y-5">
-                {pipelineData.map((stage, index) => {
-                  const percentage = totalPipelineValue > 0 ? (stage.value / totalPipelineValue) * 100 : 0;
-                  return (
-                    <div
-                      key={stage.stage}
-                      className="group opacity-0 animate-slide-in"
-                      style={{ animationDelay: `${700 + index * 60}ms`, animationFillMode: 'forwards' }}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className="w-3 h-3 rounded-full transition-all group-hover:scale-125"
-                            style={{
-                              background: stage.color,
-                              boxShadow: `0 0 12px ${stage.color}60`,
-                            }}
-                          />
-                          <span className="text-sm font-medium text-[var(--void-100)]">{stage.label}</span>
-                          <span className="text-xs text-[var(--void-500)] bg-[var(--void-700)]/50 px-2 py-0.5 rounded-md">{stage.count} deals</span>
-                        </div>
-                        <span className="text-sm font-bold text-[var(--void-50)]">
-                          {formatCurrency(stage.value)}
-                        </span>
-                      </div>
-                      <div className="h-3 bg-[var(--void-700)]/50 rounded-full overflow-hidden">
-                        <div
-                          className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
-                          style={{
-                            width: `${percentage}%`,
-                            background: `linear-gradient(90deg, ${stage.color}, ${stage.color}80)`,
-                            boxShadow: `0 0 20px ${stage.color}40`,
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
-                        </div>
+              {/* Background accents */}
+              <div className="absolute -top-32 -right-32 w-64 h-64 bg-white rounded-full opacity-[0.03] blur-[80px]" />
+              <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-white rounded-full opacity-[0.02] blur-[80px]" />
+
+              {/* Top accent line */}
+              <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-white/15">
+                        <BarChart3 className="w-6 h-6 text-[var(--void-950)]" />
                       </div>
                     </div>
-                  );
-                })}
+                    <div>
+                      <h2 className="font-display text-xl font-bold text-[var(--void-50)] tracking-tight">Pipeline Overview</h2>
+                      <p className="text-sm text-[var(--void-400)] mt-0.5">Deal stages and values</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 px-4 py-2 bg-[var(--emerald-500)]/10 border border-[var(--emerald-500)]/25 rounded-xl">
+                    <TrendingUp className="w-4 h-4 text-[var(--emerald-400)]" />
+                    <span className="text-[var(--emerald-400)] text-sm font-bold">+24%</span>
+                    <span className="text-[var(--void-400)] text-sm">this month</span>
+                  </div>
+                </div>
+
+                {/* Pipeline bars */}
+                <div className="space-y-6">
+                  {pipelineData.map((stage, index) => {
+                    const percentage = totalPipelineValue > 0 ? (stage.value / totalPipelineValue) * 100 : 0;
+                    return (
+                      <div
+                        key={stage.stage}
+                        className="group opacity-0 animate-slide-in"
+                        style={{ animationDelay: `${700 + index * 80}ms`, animationFillMode: 'forwards' }}
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className="w-3 h-3 rounded-full transition-all duration-300 group-hover:scale-125"
+                              style={{
+                                background: stage.color,
+                                boxShadow: `0 0 15px ${stage.color}80`,
+                              }}
+                            />
+                            <span className="text-sm font-semibold text-[var(--void-100)]">{stage.label}</span>
+                            <span className="text-xs text-[var(--void-500)] bg-[var(--void-800)] px-2.5 py-1 rounded-md font-medium">{stage.count} deals</span>
+                          </div>
+                          <span className="text-sm font-bold text-[var(--void-50)] font-display">
+                            {formatCurrency(stage.value)}
+                          </span>
+                        </div>
+                        <div className="h-3 bg-[var(--void-800)] rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden group-hover:brightness-110"
+                            style={{
+                              width: `${percentage}%`,
+                              background: `linear-gradient(90deg, ${stage.color}, ${stage.color}90)`,
+                              boxShadow: `0 0 25px ${stage.color}50`,
+                            }}
+                          >
+                            {/* Animated shimmer */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -335,104 +427,116 @@ export default function Dashboard() {
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Recent Deals */}
-            <div className="lg:col-span-2 relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--purple-500)]/5 via-transparent to-transparent" />
-              <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[var(--purple-500)] rounded-full opacity-10 blur-[60px]" />
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--purple-500)]/50 to-transparent" />
+            <div className="lg:col-span-2 relative rounded-2xl overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
+              <div className="relative bg-[var(--void-850)]/80 backdrop-blur-2xl border border-[var(--void-700)]/50 rounded-2xl p-7">
+                {/* Chrome reflection */}
+                <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white/[0.02] to-transparent rounded-t-2xl pointer-events-none" />
 
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Recent Deals</h2>
-                    <Sparkles className="w-4 h-4 text-[var(--indigo-400)] animate-pulse" />
+                <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-white rounded-full opacity-[0.02] blur-[80px]" />
+                <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Recent Deals</h2>
+                      <Sparkles className="w-4 h-4 text-[var(--void-300)]" style={{ animation: 'glow-pulse 2s ease-in-out infinite' }} />
+                    </div>
+                    <a href="/deals" className="group text-sm text-[var(--void-200)] hover:text-white flex items-center gap-1.5 transition-colors font-medium">
+                      View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
                   </div>
-                  <a href="/deals" className="text-sm text-[var(--indigo-400)] hover:text-[var(--indigo-300)] flex items-center gap-1 transition-colors group">
-                    View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {data.recentDeals.slice(0, 4).map((deal, index) => (
-                    <DealCard key={deal.id} deal={deal} index={index} />
-                  ))}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {data.recentDeals.slice(0, 4).map((deal, index) => (
+                      <DealCard key={deal.id} deal={deal} index={index} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Upcoming Activities */}
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '900ms', animationFillMode: 'forwards' }}>
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--cyan-500)]/5 via-transparent to-transparent" />
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-[var(--cyan-500)] rounded-full opacity-10 blur-[60px]" />
-              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--cyan-500)]/50 to-transparent" />
+            <div className="relative rounded-2xl overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '900ms', animationFillMode: 'forwards' }}>
+              <div className="relative bg-[var(--void-850)]/80 backdrop-blur-2xl border border-[var(--void-700)]/50 rounded-2xl p-7 h-full">
+                {/* Chrome reflection */}
+                <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white/[0.02] to-transparent rounded-t-2xl pointer-events-none" />
 
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Activities</h2>
-                    <span className="px-2.5 py-1 bg-gradient-to-r from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 text-[var(--indigo-400)] text-xs font-semibold rounded-full border border-[var(--indigo-500)]/20">
-                      {data.stats.pendingActivities} pending
-                    </span>
+                <div className="absolute -top-32 -right-32 w-64 h-64 bg-white rounded-full opacity-[0.02] blur-[80px]" />
+                <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Activities</h2>
+                      <span className="px-2.5 py-1 bg-white/10 text-[var(--void-100)] text-[10px] font-bold tracking-wider uppercase rounded-full border border-white/15">
+                        {data.stats.pendingActivities} pending
+                      </span>
+                    </div>
+                    <a href="/activities" className="group text-sm text-[var(--void-200)] hover:text-white flex items-center gap-1.5 transition-colors font-medium">
+                      View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
                   </div>
-                  <a href="/activities" className="text-sm text-[var(--indigo-400)] hover:text-[var(--indigo-300)] flex items-center gap-1 transition-colors group">
-                    View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </div>
-                <div className="space-y-3">
-                  {data.upcomingActivities.slice(0, 4).map((activity, index) => (
-                    <ActivityItem key={activity.id} activity={activity} index={index} />
-                  ))}
+                  <div className="space-y-3">
+                    {data.upcomingActivities.slice(0, 4).map((activity, index) => (
+                      <ActivityItem key={activity.id} activity={activity} index={index} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Recent Contacts */}
-          <div className="relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
-            <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)]/5 via-transparent to-transparent" />
-            <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[var(--indigo-500)] rounded-full opacity-10 blur-[60px]" />
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--indigo-500)]/50 to-transparent" />
+          <div className="relative rounded-2xl overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
+            <div className="relative bg-[var(--void-850)]/80 backdrop-blur-2xl border border-[var(--void-700)]/50 rounded-2xl p-7">
+              {/* Chrome reflection */}
+              <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-white/[0.02] to-transparent rounded-t-2xl pointer-events-none" />
 
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Recent Contacts</h2>
-                <a href="/contacts" className="text-sm text-[var(--indigo-400)] hover:text-[var(--indigo-300)] flex items-center gap-1 transition-colors group">
-                  View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {data.recentContacts.map((contact, index) => (
-                  <div
-                    key={contact.id}
-                    className="group relative flex items-center gap-4 p-4 bg-[var(--void-700)]/30 rounded-xl border border-[var(--void-700)]/50 hover:border-[var(--indigo-500)]/30 hover:bg-[var(--void-700)]/50 transition-all cursor-pointer opacity-0 animate-fade-in overflow-hidden"
-                    style={{ animationDelay: `${1100 + index * 50}ms`, animationFillMode: 'forwards' }}
-                  >
-                    {/* Hover glow */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/5 to-[var(--purple-500)]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute -bottom-32 -right-32 w-64 h-64 bg-white rounded-full opacity-[0.02] blur-[80px]" />
+              <div className="absolute top-0 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
-                    <div className="relative z-10 flex items-center gap-4">
-                      <div className="relative">
-                        <div
-                          className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0 transition-transform group-hover:scale-105"
-                          style={{
-                            background: `linear-gradient(135deg, ${contact.avatar_color || 'var(--indigo-500)'}, ${contact.avatar_color || 'var(--indigo-500)'}80)`,
-                            boxShadow: `0 4px 12px ${contact.avatar_color || 'var(--indigo-500)'}40`
-                          }}
-                        >
-                          {contact.first_name[0]}{contact.last_name[0]}
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Recent Contacts</h2>
+                  <a href="/contacts" className="group text-sm text-[var(--void-200)] hover:text-white flex items-center gap-1.5 transition-colors font-medium">
+                    View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {data.recentContacts.map((contact, index) => (
+                    <div
+                      key={contact.id}
+                      className="group relative flex items-center gap-4 p-4 bg-[var(--void-800)]/40 rounded-xl border border-[var(--void-700)]/40 hover:border-white/15 hover:bg-[var(--void-800)]/60 transition-all duration-300 cursor-pointer opacity-0 animate-fade-in overflow-hidden"
+                      style={{ animationDelay: `${1100 + index * 50}ms`, animationFillMode: 'forwards' }}
+                    >
+                      {/* Hover glow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                      <div className="relative z-10 flex items-center gap-4">
+                        <div className="relative">
+                          <div
+                            className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0 transition-all duration-300 group-hover:scale-105 group-hover:shadow-lg"
+                            style={{
+                              background: `linear-gradient(135deg, ${contact.avatar_color || 'var(--void-400)'}, ${contact.avatar_color || 'var(--void-400)'}80)`,
+                              boxShadow: `0 4px 15px ${contact.avatar_color || 'var(--void-400)'}30`
+                            }}
+                          >
+                            {contact.first_name[0]}{contact.last_name[0]}
+                          </div>
+                          <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5">
+                            <div className="absolute inset-0 bg-[var(--emerald-500)] rounded-full border-2 border-[var(--void-850)]" />
+                          </div>
                         </div>
-                        <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[var(--emerald-500)] rounded-full border-2 border-[var(--void-800)] flex items-center justify-center">
-                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                        <div className="min-w-0">
+                          <p className="font-semibold text-[var(--void-100)] truncate group-hover:text-white transition-colors">
+                            {contact.first_name} {contact.last_name}
+                          </p>
+                          <p className="text-xs text-[var(--void-400)] truncate">{contact.title}</p>
+                          <p className="text-xs text-[var(--void-500)] truncate">{contact.company_name}</p>
                         </div>
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-semibold text-[var(--void-100)] truncate group-hover:text-white transition-colors">
-                          {contact.first_name} {contact.last_name}
-                        </p>
-                        <p className="text-xs text-[var(--void-400)] truncate">{contact.title}</p>
-                        <p className="text-xs text-[var(--void-500)] truncate">{contact.company_name}</p>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>

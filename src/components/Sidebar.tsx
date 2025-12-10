@@ -34,50 +34,50 @@ export default function Sidebar() {
   const isAIChatActive = pathname === '/ai-chat';
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[260px] bg-[var(--void-950)]/90 backdrop-blur-2xl border-r border-[var(--void-800)] flex flex-col z-[100]">
+    <aside className="fixed left-0 top-0 h-screen w-[260px] bg-[var(--void-950)]/95 backdrop-blur-2xl border-r border-[var(--void-800)] flex flex-col z-[100]">
       {/* Neural network background pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Animated glow orbs */}
+        {/* Animated glow orbs - subtle white */}
         <div
-          className="absolute top-20 -left-20 w-40 h-40 bg-[var(--indigo-500)] rounded-full opacity-15 blur-[80px]"
+          className="absolute top-20 -left-20 w-40 h-40 bg-white rounded-full opacity-[0.03] blur-[80px]"
           style={{ animation: 'glow-breathe 4s ease-in-out infinite' }}
         />
         <div
-          className="absolute top-1/2 -left-10 w-32 h-32 bg-[var(--purple-500)] rounded-full opacity-10 blur-[60px]"
+          className="absolute top-1/2 -left-10 w-32 h-32 bg-white rounded-full opacity-[0.02] blur-[60px]"
           style={{ animation: 'glow-breathe 5s ease-in-out infinite 1s' }}
         />
         <div
-          className="absolute bottom-32 -left-16 w-36 h-36 bg-[var(--cyan-500)] rounded-full opacity-10 blur-[70px]"
+          className="absolute bottom-32 -left-16 w-36 h-36 bg-white rounded-full opacity-[0.02] blur-[70px]"
           style={{ animation: 'glow-breathe 6s ease-in-out infinite 2s' }}
         />
 
         {/* Flowing data stream lines */}
-        <div className="absolute top-0 left-[50%] w-px h-full bg-gradient-to-b from-transparent via-[var(--indigo-500)]/10 to-transparent" />
-        <div className="absolute top-0 left-[70%] w-px h-full bg-gradient-to-b from-transparent via-[var(--purple-500)]/5 to-transparent" />
+        <div className="absolute top-0 left-[50%] w-px h-full bg-gradient-to-b from-transparent via-white/5 to-transparent" />
+        <div className="absolute top-0 left-[70%] w-px h-full bg-gradient-to-b from-transparent via-white/[0.02] to-transparent" />
 
         {/* Subtle grid overlay */}
-        <div className="absolute inset-0 bg-grid opacity-10" />
+        <div className="absolute inset-0 bg-grid opacity-30" />
       </div>
 
       {/* Logo */}
       <div className="relative p-5 border-b border-[var(--void-800)]">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center shadow-lg shadow-[var(--indigo-500)]/30 group-hover:shadow-[var(--indigo-500)]/60 transition-all duration-500 group-hover:scale-105">
-            <Sparkles className="w-5 h-5 text-white relative z-10" />
+          <div className="relative w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg shadow-white/20 group-hover:shadow-white/40 transition-all duration-500 group-hover:scale-105">
+            <Sparkles className="w-5 h-5 text-[var(--void-950)] relative z-10" />
 
             {/* Animated pulse ring */}
             <div
-              className="absolute inset-0 rounded-xl bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)]"
+              className="absolute inset-0 rounded-xl bg-white"
               style={{ animation: 'pulse-ring 3s ease-out infinite' }}
             />
 
             {/* Inner glow */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           <div>
             <h1 className="font-display text-xl font-semibold text-[var(--void-50)] tracking-tight flex items-center gap-2">
               Nexus
-              <Zap className="w-3.5 h-3.5 text-[var(--amber-400)]" style={{ animation: 'glow-breathe 2s ease-in-out infinite' }} />
+              <Zap className="w-3.5 h-3.5 text-[var(--void-300)]" style={{ animation: 'glow-breathe 2s ease-in-out infinite' }} />
             </h1>
             <p className="text-[10px] text-[var(--void-400)] tracking-widest uppercase font-medium">AI-Powered CRM</p>
           </div>
@@ -96,20 +96,20 @@ export default function Sidebar() {
       {/* Search */}
       <div className="relative p-4">
         <div className="relative group">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--void-500)] group-focus-within:text-[var(--indigo-400)] transition-colors z-10" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--void-500)] group-focus-within:text-[var(--void-200)] transition-colors z-10" />
           <input
             type="text"
             placeholder="Ask AI or search..."
-            className="w-full pl-10 pr-16 py-2.5 bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl text-sm text-[var(--void-100)] placeholder:text-[var(--void-500)] focus:outline-none focus:border-[var(--indigo-500)]/50 focus:bg-[var(--void-800)] focus:shadow-[0_0_20px_rgba(99,102,241,0.1)] transition-all"
+            className="w-full pl-10 pr-16 py-2.5 bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl text-sm text-[var(--void-100)] placeholder:text-[var(--void-500)] focus:outline-none focus:border-white/20 focus:bg-[var(--void-800)] focus:shadow-[0_0_20px_rgba(255,255,255,0.05)] transition-all"
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-1.5 py-1 rounded-md bg-gradient-to-r from-[var(--void-700)]/60 to-[var(--void-800)]/60 border border-[var(--void-600)]/50">
-            <Command className="w-3 h-3 text-[var(--indigo-400)]" />
+            <Command className="w-3 h-3 text-[var(--void-300)]" />
             <span className="text-[10px] text-[var(--void-400)] font-medium">K</span>
           </div>
 
           {/* AI hint */}
           <div className="absolute -bottom-4 left-0 flex items-center gap-1 opacity-0 group-focus-within:opacity-100 transition-opacity">
-            <Sparkles className="w-2.5 h-2.5 text-[var(--indigo-400)]" />
+            <Sparkles className="w-2.5 h-2.5 text-[var(--void-300)]" />
             <span className="text-[9px] text-[var(--void-500)]">AI-powered search</span>
           </div>
         </div>
@@ -136,25 +136,25 @@ export default function Sidebar() {
                   {/* Active background with gradient */}
                   {isActive && (
                     <>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/20 to-transparent" />
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-gradient-to-b from-[var(--indigo-400)] to-[var(--purple-500)] rounded-r-full shadow-[0_0_12px_var(--indigo-500)]" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-white rounded-r-full shadow-[0_0_12px_rgba(255,255,255,0.5)]" />
                     </>
                   )}
 
                   <div className={`
                     relative z-10 w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200
                     ${isActive
-                      ? 'bg-[var(--indigo-500)]/20'
+                      ? 'bg-white/15'
                       : 'bg-[var(--void-800)]/50 group-hover:bg-[var(--void-700)]'
                     }
                   `}>
-                    <item.icon className={`w-4 h-4 ${isActive ? 'text-[var(--indigo-400)]' : 'text-[var(--void-400)] group-hover:text-[var(--void-200)]'} transition-colors`} />
+                    <item.icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[var(--void-400)] group-hover:text-[var(--void-200)]'} transition-colors`} />
                   </div>
                   <span className="relative z-10">{item.name}</span>
 
                   {/* Hover glow effect */}
                   {!isActive && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/0 to-transparent opacity-0 group-hover:opacity-10 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 to-transparent opacity-0 group-hover:opacity-5 transition-opacity" />
                   )}
                 </Link>
               </li>
@@ -170,22 +170,22 @@ export default function Sidebar() {
           className={`
             relative w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-300 group overflow-hidden
             ${isAIChatActive
-              ? 'bg-gradient-to-r from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 text-white border border-[var(--indigo-500)]/30'
-              : 'text-[var(--void-300)] hover:text-white bg-gradient-to-r from-[var(--indigo-500)]/10 to-[var(--purple-500)]/10 hover:from-[var(--indigo-500)]/20 hover:to-[var(--purple-500)]/20 border border-[var(--void-700)] hover:border-[var(--indigo-500)]/30'
+              ? 'bg-white/10 text-white border border-white/20'
+              : 'text-[var(--void-300)] hover:text-white bg-white/5 hover:bg-white/10 border border-[var(--void-700)] hover:border-white/15'
             }
           `}
         >
           {/* Animated gradient background */}
           <div
-            className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/0 via-[var(--purple-500)]/10 to-[var(--indigo-500)]/0 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity"
             style={{ animation: 'shimmer 2s ease-in-out infinite' }}
           />
 
-          <div className="relative z-10 w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center shadow-lg shadow-[var(--indigo-500)]/20 group-hover:shadow-[var(--indigo-500)]/40 transition-all">
-            <Brain className="w-4 h-4 text-white" />
+          <div className="relative z-10 w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-lg shadow-white/20 group-hover:shadow-white/30 transition-all">
+            <Brain className="w-4 h-4 text-[var(--void-950)]" />
             {/* Pulse effect */}
             <div
-              className="absolute inset-0 rounded-lg bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)]"
+              className="absolute inset-0 rounded-lg bg-white"
               style={{ animation: 'pulse-ring 2s ease-out infinite' }}
             />
           </div>
@@ -197,12 +197,12 @@ export default function Sidebar() {
 
           {/* Sparkle indicator */}
           <div className="relative z-10">
-            <Sparkles className="w-4 h-4 text-[var(--amber-400)]" style={{ animation: 'glow-breathe 2s ease-in-out infinite' }} />
+            <Sparkles className="w-4 h-4 text-[var(--void-300)]" style={{ animation: 'glow-breathe 2s ease-in-out infinite' }} />
           </div>
 
           {/* Active indicator */}
           {isAIChatActive && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-8 bg-gradient-to-b from-[var(--indigo-400)] to-[var(--purple-500)] rounded-r-full shadow-[0_0_12px_var(--indigo-500)]" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-8 bg-white rounded-r-full shadow-[0_0_12px_rgba(255,255,255,0.5)]" />
           )}
         </Link>
       </div>
@@ -238,11 +238,11 @@ export default function Sidebar() {
       {/* User Profile */}
       <div className="relative p-4 border-t border-[var(--void-800)]">
         {/* Subtle gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--indigo-500)]/5 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white/[0.02] to-transparent pointer-events-none" />
 
         <div className="relative flex items-center gap-3 p-2 rounded-xl hover:bg-[var(--void-800)]/50 transition-all cursor-pointer group">
           <div className="relative">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--cyan-500)] to-[var(--indigo-500)] flex items-center justify-center text-xs font-bold text-white shadow-lg shadow-[var(--cyan-500)]/25 group-hover:shadow-[var(--cyan-500)]/40 transition-all">
+            <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-xs font-bold text-[var(--void-950)] shadow-lg shadow-white/15 group-hover:shadow-white/25 transition-all">
               JD
             </div>
             {/* Online indicator with pulse */}
@@ -254,7 +254,7 @@ export default function Sidebar() {
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-[var(--void-100)] truncate flex items-center gap-2">
               John Doe
-              <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider bg-gradient-to-r from-[var(--indigo-500)] to-[var(--purple-500)] text-white rounded">Pro</span>
+              <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider bg-white text-[var(--void-950)] rounded">Pro</span>
             </p>
             <p className="text-xs text-[var(--void-500)] truncate">john@nexus.io</p>
           </div>
