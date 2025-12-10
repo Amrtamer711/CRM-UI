@@ -1,6 +1,6 @@
 'use client';
 
-import { LucideIcon, TrendingUp, TrendingDown, Minus, ArrowUpRight } from 'lucide-react';
+import { LucideIcon, TrendingUp, TrendingDown, Minus, ArrowUpRight, Sparkles } from 'lucide-react';
 
 interface StatCardProps {
   title: string;
@@ -11,6 +11,7 @@ interface StatCardProps {
   iconColor?: string;
   glowColor?: string;
   delay?: number;
+  aiEnhanced?: boolean;
 }
 
 export default function StatCard({
@@ -21,7 +22,8 @@ export default function StatCard({
   icon: Icon,
   iconColor = 'var(--indigo-500)',
   glowColor,
-  delay = 0
+  delay = 0,
+  aiEnhanced = false
 }: StatCardProps) {
   const getTrendIcon = () => {
     if (change === undefined) return null;
@@ -39,8 +41,8 @@ export default function StatCard({
 
   const getTrendBg = () => {
     if (change === undefined) return '';
-    if (change > 0) return 'bg-[var(--emerald-500)]/10';
-    if (change < 0) return 'bg-[var(--rose-500)]/10';
+    if (change > 0) return 'bg-[var(--emerald-500)]/10 border border-[var(--emerald-500)]/20';
+    if (change < 0) return 'bg-[var(--rose-500)]/10 border border-[var(--rose-500)]/20';
     return 'bg-[var(--void-700)]';
   };
 
@@ -52,38 +54,80 @@ export default function StatCard({
       className="group relative rounded-2xl p-[1px] overflow-hidden opacity-0 animate-fade-in"
       style={{ animationDelay: `${delay}ms`, animationFillMode: 'forwards' }}
     >
-      {/* Gradient border */}
+      {/* Animated gradient border */}
       <div
-        className="absolute inset-0 rounded-2xl opacity-40 group-hover:opacity-80 transition-opacity duration-500"
+        className="absolute inset-0 rounded-2xl opacity-40 group-hover:opacity-100 transition-opacity duration-500"
         style={{
-          background: `linear-gradient(135deg, ${iconColor}, transparent 50%, ${iconColor}40)`,
+          background: `linear-gradient(135deg, ${iconColor}, transparent 40%, ${iconColor}60, transparent 80%, ${iconColor}40)`,
+          backgroundSize: '200% 200%',
+          animation: 'gradient-shift 3s ease infinite',
         }}
       />
 
       {/* Card content */}
-      <div className="relative bg-[var(--void-800)] rounded-2xl p-6 h-full transition-all duration-300 group-hover:bg-[var(--void-800)]/80">
-        {/* Ambient glow */}
+      <div className="relative bg-[var(--void-800)]/90 backdrop-blur-xl rounded-2xl p-6 h-full transition-all duration-300 group-hover:bg-[var(--void-800)]/70">
+        {/* Ambient glow - enhanced */}
         <div
-          className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-20 blur-3xl transition-opacity duration-500 group-hover:opacity-40"
+          className="absolute -top-16 -right-16 w-40 h-40 rounded-full opacity-20 blur-[50px] transition-all duration-700 group-hover:opacity-50 group-hover:scale-110"
+          style={{ background: `radial-gradient(circle, ${glow}, transparent 70%)` }}
+        />
+
+        {/* Secondary glow for depth */}
+        <div
+          className="absolute -bottom-8 -left-8 w-24 h-24 rounded-full opacity-10 blur-[30px] group-hover:opacity-30 transition-opacity duration-500"
           style={{ background: glow }}
         />
 
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0 bg-grid opacity-30 rounded-2xl" />
+        {/* Neural mesh pattern */}
+        <div className="absolute inset-0 bg-grid opacity-20 rounded-2xl" />
+
+        {/* Scan line effect */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl overflow-hidden"
+          style={{
+            background: 'linear-gradient(180deg, transparent 0%, transparent 45%, rgba(99, 102, 241, 0.03) 50%, transparent 55%, transparent 100%)',
+            backgroundSize: '100% 200%',
+            animation: 'scan-line 2s linear infinite',
+          }}
+        />
 
         <div className="relative z-10">
           {/* Header */}
           <div className="flex items-start justify-between mb-5">
-            <div
-              className="relative w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-              style={{ background: `${iconColor}15` }}
-            >
-              <Icon className="w-5 h-5" style={{ color: iconColor }} />
-              {/* Icon glow */}
+            <div className="relative">
+              {/* Icon container with pulse ring */}
               <div
-                className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg"
-                style={{ background: iconColor }}
-              />
+                className="relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                style={{ background: `${iconColor}15` }}
+              >
+                <Icon className="w-5 h-5 relative z-10" style={{ color: iconColor }} />
+
+                {/* Pulse ring effect */}
+                <div
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100"
+                  style={{
+                    boxShadow: `0 0 0 0 ${iconColor}`,
+                    animation: 'pulse-ring 2s ease-out infinite',
+                  }}
+                />
+
+                {/* Icon glow */}
+                <div
+                  className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300 blur-xl"
+                  style={{ background: iconColor }}
+                />
+              </div>
+
+              {/* AI indicator dot */}
+              {aiEnhanced && (
+                <div className="absolute -top-1 -right-1 w-3 h-3">
+                  <div
+                    className="absolute inset-0 rounded-full bg-[var(--emerald-400)]"
+                    style={{ animation: 'glow-breathe 2s ease-in-out infinite' }}
+                  />
+                  <div className="absolute inset-0 rounded-full bg-[var(--emerald-400)] animate-ping opacity-75" />
+                </div>
+              )}
             </div>
 
             {change !== undefined && TrendIcon && (
@@ -96,8 +140,20 @@ export default function StatCard({
 
           {/* Content */}
           <div>
-            <p className="text-sm text-[var(--void-400)] font-medium mb-2">{title}</p>
-            <p className="text-3xl font-display font-bold text-[var(--void-50)] tracking-tight">{value}</p>
+            <p className="text-sm text-[var(--void-400)] font-medium mb-2 flex items-center gap-2">
+              {title}
+              {aiEnhanced && (
+                <Sparkles className="w-3 h-3 text-[var(--indigo-400)]" style={{ animation: 'glow-breathe 2s ease-in-out infinite' }} />
+              )}
+            </p>
+            <p
+              className="text-3xl font-display font-bold text-[var(--void-50)] tracking-tight"
+              style={{
+                textShadow: '0 0 30px rgba(99, 102, 241, 0.1)'
+              }}
+            >
+              {value}
+            </p>
             {changeLabel && change !== undefined && (
               <p className="text-xs text-[var(--void-500)] mt-3 flex items-center gap-1">
                 <span>{changeLabel}</span>
@@ -107,10 +163,20 @@ export default function StatCard({
           </div>
         </div>
 
-        {/* Bottom accent line */}
+        {/* Bottom accent line - animated */}
         <div
-          className="absolute bottom-0 left-6 right-6 h-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500"
-          style={{ background: `linear-gradient(90deg, transparent, ${iconColor}, transparent)` }}
+          className="absolute bottom-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-all duration-500"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${iconColor}, transparent)`,
+          }}
+        />
+
+        {/* Corner accents */}
+        <div
+          className="absolute top-0 right-0 w-16 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background: `linear-gradient(225deg, ${iconColor}20 0%, transparent 50%)`,
+          }}
         />
       </div>
     </div>

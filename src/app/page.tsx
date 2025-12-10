@@ -5,6 +5,11 @@ import Header from '@/components/Header';
 import StatCard from '@/components/StatCard';
 import DealCard from '@/components/DealCard';
 import ActivityItem from '@/components/ActivityItem';
+import RevenueChart from '@/components/charts/RevenueChart';
+import PipelineChart from '@/components/charts/PipelineChart';
+import ActivityChart from '@/components/charts/ActivityChart';
+import RadialChart from '@/components/charts/RadialChart';
+import AIInsightsCard from '@/components/charts/AIInsightsCard';
 import {
   Users,
   Building2,
@@ -13,8 +18,11 @@ import {
   ArrowRight,
   TrendingUp,
   Sparkles,
+  Brain,
+  Zap,
+  Activity,
 } from 'lucide-react';
-import type { Deal, Activity, Contact } from '@/lib/db';
+import type { Deal, Activity as ActivityType, Contact } from '@/lib/db';
 
 interface DashboardData {
   stats: {
@@ -26,7 +34,7 @@ interface DashboardData {
   };
   dealsByStage: Array<{ stage: string; count: number; value: number }>;
   recentDeals: Deal[];
-  upcomingActivities: Activity[];
+  upcomingActivities: ActivityType[];
   recentContacts: (Contact & { company_name: string })[];
 }
 
@@ -77,11 +85,22 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--void-950)]">
         <div className="flex flex-col items-center gap-4">
-          <div className="relative w-12 h-12">
+          <div className="relative w-16 h-16">
+            {/* Outer ring */}
             <div className="absolute inset-0 border-2 border-[var(--void-700)] rounded-full" />
-            <div className="absolute inset-0 border-2 border-transparent border-t-[var(--indigo-500)] rounded-full animate-spin" />
+            {/* Spinning gradient */}
+            <div className="absolute inset-0 border-2 border-transparent rounded-full animate-spin" style={{ borderTopColor: 'var(--indigo-500)', borderRightColor: 'var(--purple-500)' }} />
+            {/* Inner glow */}
+            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 animate-pulse" />
+            {/* AI icon */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Brain className="w-6 h-6 text-[var(--indigo-400)]" />
+            </div>
           </div>
-          <p className="text-[var(--void-400)] text-sm">Loading dashboard...</p>
+          <div className="text-center">
+            <p className="text-[var(--void-100)] font-medium">Initializing Dashboard</p>
+            <p className="text-[var(--void-400)] text-sm mt-1">Loading your data...</p>
+          </div>
         </div>
       </div>
     );
@@ -110,23 +129,56 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[var(--void-950)] relative">
-      {/* Ambient background effects */}
+      {/* Animated ambient background effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[var(--indigo-500)] rounded-full opacity-[0.03] blur-[120px]" />
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[var(--purple-500)] rounded-full opacity-[0.03] blur-[100px]" />
-        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[var(--cyan-500)] rounded-full opacity-[0.02] blur-[80px]" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-[var(--indigo-500)] rounded-full opacity-[0.04] blur-[120px] animate-glow-breathe" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-[var(--purple-500)] rounded-full opacity-[0.04] blur-[100px] animate-glow-breathe" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[var(--cyan-500)] rounded-full opacity-[0.03] blur-[80px] animate-glow-breathe" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/4 left-0 w-[300px] h-[300px] bg-[var(--emerald-500)] rounded-full opacity-[0.02] blur-[60px] animate-glow-breathe" style={{ animationDelay: '3s' }} />
       </div>
 
+      {/* Mesh gradient overlay */}
+      <div className="fixed inset-0 bg-mesh pointer-events-none opacity-50" />
+
       {/* Grid overlay */}
-      <div className="fixed inset-0 bg-grid pointer-events-none opacity-50" />
+      <div className="fixed inset-0 bg-grid pointer-events-none opacity-30" />
 
       <div className="relative z-10">
         <Header
           title="Dashboard"
-          subtitle="Welcome back. Here's your pipeline overview."
+          subtitle="Welcome back. Here's your AI-powered pipeline overview."
         />
 
         <div className="p-8 space-y-8">
+          {/* AI Status Banner */}
+          <div className="relative overflow-hidden bg-gradient-to-r from-[var(--indigo-500)]/10 via-[var(--purple-500)]/10 to-[var(--cyan-500)]/10 border border-[var(--indigo-500)]/20 rounded-2xl p-4 opacity-0 animate-fade-in" style={{ animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/5 to-transparent animate-gradient" style={{ backgroundSize: '200% 100%' }} />
+            <div className="relative z-10 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="relative">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-[var(--emerald-400)] rounded-full flex items-center justify-center">
+                    <Zap className="w-2.5 h-2.5 text-[var(--void-900)]" />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-display font-bold text-[var(--void-50)]">AI Assistant Active</h3>
+                    <span className="px-2 py-0.5 bg-[var(--emerald-500)]/20 text-[var(--emerald-400)] text-xs font-medium rounded-full">Online</span>
+                  </div>
+                  <p className="text-sm text-[var(--void-300)]">3 new insights available based on your pipeline activity</p>
+                </div>
+              </div>
+              <button className="flex items-center gap-2 px-4 py-2 bg-[var(--void-800)]/80 hover:bg-[var(--void-700)] border border-[var(--void-600)] rounded-xl text-sm font-medium text-[var(--void-100)] transition-all group">
+                <Sparkles className="w-4 h-4 text-[var(--indigo-400)]" />
+                <span>View Insights</span>
+                <ArrowRight className="w-4 h-4 text-[var(--void-400)] group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+          </div>
+
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
             <StatCard
@@ -163,18 +215,71 @@ export default function Dashboard() {
             />
           </div>
 
+          {/* Charts Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 opacity-0 animate-fade-in" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
+            <RevenueChart />
+            <PipelineChart />
+          </div>
+
+          {/* Secondary Charts Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 opacity-0 animate-fade-in" style={{ animationDelay: '400ms', animationFillMode: 'forwards' }}>
+            <div className="lg:col-span-2">
+              <ActivityChart />
+            </div>
+            <AIInsightsCard />
+          </div>
+
+          {/* Radial Charts Row */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 opacity-0 animate-fade-in" style={{ animationDelay: '500ms', animationFillMode: 'forwards' }}>
+            <RadialChart
+              value={data.stats.wonDealsValue}
+              target={1000000}
+              title="Q4 Revenue Target"
+              subtitle="Quarterly goal"
+              color="#6366f1"
+            />
+            <RadialChart
+              value={42}
+              target={50}
+              title="New Leads"
+              subtitle="Monthly target"
+              color="#22d3ee"
+            />
+            <RadialChart
+              value={28}
+              target={30}
+              title="Deals Closed"
+              subtitle="This quarter"
+              color="#a855f7"
+            />
+            <RadialChart
+              value={89}
+              target={100}
+              title="Activities"
+              subtitle="Weekly target"
+              color="#34d399"
+            />
+          </div>
+
           {/* Pipeline Overview */}
-          <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}>
-            {/* Card glow */}
+          <div className="relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
+            {/* Background effects */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)]/5 via-transparent to-[var(--purple-500)]/5" />
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-[var(--indigo-500)] rounded-full opacity-10 blur-[60px]" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--indigo-500)]/50 to-transparent" />
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="font-display text-xl font-semibold text-[var(--void-50)]">Pipeline Overview</h2>
-                  <p className="text-sm text-[var(--void-400)] mt-1">Deal stages and values</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center">
+                    <Activity className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Pipeline Overview</h2>
+                    <p className="text-sm text-[var(--void-400)]">Deal stages and values</p>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--emerald-500)]/10 rounded-lg">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--emerald-500)]/10 border border-[var(--emerald-500)]/30 rounded-full">
                   <TrendingUp className="w-4 h-4 text-[var(--emerald-400)]" />
                   <span className="text-[var(--emerald-400)] text-sm font-semibold">+24%</span>
                   <span className="text-[var(--void-400)] text-sm">this month</span>
@@ -189,15 +294,15 @@ export default function Dashboard() {
                     <div
                       key={stage.stage}
                       className="group opacity-0 animate-slide-in"
-                      style={{ animationDelay: `${400 + index * 60}ms`, animationFillMode: 'forwards' }}
+                      style={{ animationDelay: `${700 + index * 60}ms`, animationFillMode: 'forwards' }}
                     >
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center gap-3">
                           <div
-                            className="w-3 h-3 rounded-full transition-transform group-hover:scale-125"
+                            className="w-3 h-3 rounded-full transition-all group-hover:scale-125"
                             style={{
                               background: stage.color,
-                              boxShadow: `0 0 12px ${stage.color}40`,
+                              boxShadow: `0 0 12px ${stage.color}60`,
                             }}
                           />
                           <span className="text-sm font-medium text-[var(--void-100)]">{stage.label}</span>
@@ -207,7 +312,7 @@ export default function Dashboard() {
                           {formatCurrency(stage.value)}
                         </span>
                       </div>
-                      <div className="h-2 bg-[var(--void-700)]/50 rounded-full overflow-hidden">
+                      <div className="h-3 bg-[var(--void-700)]/50 rounded-full overflow-hidden">
                         <div
                           className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
                           style={{
@@ -217,7 +322,7 @@ export default function Dashboard() {
                           }}
                         >
                           {/* Shimmer effect */}
-                          <div className="absolute inset-0 animate-shimmer" />
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
                         </div>
                       </div>
                     </div>
@@ -230,14 +335,16 @@ export default function Dashboard() {
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Recent Deals */}
-            <div className="lg:col-span-2 relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '500ms', animationFillMode: 'forwards' }}>
+            <div className="lg:col-span-2 relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '800ms', animationFillMode: 'forwards' }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--purple-500)]/5 via-transparent to-transparent" />
               <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[var(--purple-500)] rounded-full opacity-10 blur-[60px]" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--purple-500)]/50 to-transparent" />
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <h2 className="font-display text-xl font-semibold text-[var(--void-50)]">Recent Deals</h2>
-                    <Sparkles className="w-4 h-4 text-[var(--indigo-400)]" />
+                    <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Recent Deals</h2>
+                    <Sparkles className="w-4 h-4 text-[var(--indigo-400)] animate-pulse" />
                   </div>
                   <a href="/deals" className="text-sm text-[var(--indigo-400)] hover:text-[var(--indigo-300)] flex items-center gap-1 transition-colors group">
                     View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -252,13 +359,15 @@ export default function Dashboard() {
             </div>
 
             {/* Upcoming Activities */}
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}>
+            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '900ms', animationFillMode: 'forwards' }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--cyan-500)]/5 via-transparent to-transparent" />
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-[var(--cyan-500)] rounded-full opacity-10 blur-[60px]" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--cyan-500)]/50 to-transparent" />
 
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
-                    <h2 className="font-display text-xl font-semibold text-[var(--void-50)]">Activities</h2>
+                    <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Activities</h2>
                     <span className="px-2.5 py-1 bg-gradient-to-r from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 text-[var(--indigo-400)] text-xs font-semibold rounded-full border border-[var(--indigo-500)]/20">
                       {data.stats.pendingActivities} pending
                     </span>
@@ -277,12 +386,14 @@ export default function Dashboard() {
           </div>
 
           {/* Recent Contacts */}
-          <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '700ms', animationFillMode: 'forwards' }}>
+          <div className="relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-2xl p-6 opacity-0 animate-fade-in overflow-hidden" style={{ animationDelay: '1000ms', animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)]/5 via-transparent to-transparent" />
             <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-[var(--indigo-500)] rounded-full opacity-10 blur-[60px]" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--indigo-500)]/50 to-transparent" />
 
             <div className="relative z-10">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-display text-xl font-semibold text-[var(--void-50)]">Recent Contacts</h2>
+                <h2 className="font-display text-xl font-bold text-[var(--void-50)]">Recent Contacts</h2>
                 <a href="/contacts" className="text-sm text-[var(--indigo-400)] hover:text-[var(--indigo-300)] flex items-center gap-1 transition-colors group">
                   View all <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
@@ -291,26 +402,34 @@ export default function Dashboard() {
                 {data.recentContacts.map((contact, index) => (
                   <div
                     key={contact.id}
-                    className="group flex items-center gap-4 p-4 bg-[var(--void-700)]/30 rounded-xl border border-[var(--void-700)]/50 hover:border-[var(--indigo-500)]/30 hover:bg-[var(--void-700)]/50 transition-all cursor-pointer opacity-0 animate-fade-in"
-                    style={{ animationDelay: `${800 + index * 50}ms`, animationFillMode: 'forwards' }}
+                    className="group relative flex items-center gap-4 p-4 bg-[var(--void-700)]/30 rounded-xl border border-[var(--void-700)]/50 hover:border-[var(--indigo-500)]/30 hover:bg-[var(--void-700)]/50 transition-all cursor-pointer opacity-0 animate-fade-in overflow-hidden"
+                    style={{ animationDelay: `${1100 + index * 50}ms`, animationFillMode: 'forwards' }}
                   >
-                    <div className="relative">
-                      <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0 transition-transform group-hover:scale-105"
-                        style={{
-                          background: `linear-gradient(135deg, ${contact.avatar_color || 'var(--indigo-500)'}, ${contact.avatar_color || 'var(--indigo-500)'}80)`,
-                        }}
-                      >
-                        {contact.first_name[0]}{contact.last_name[0]}
+                    {/* Hover glow */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/5 to-[var(--purple-500)]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                    <div className="relative z-10 flex items-center gap-4">
+                      <div className="relative">
+                        <div
+                          className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0 transition-transform group-hover:scale-105"
+                          style={{
+                            background: `linear-gradient(135deg, ${contact.avatar_color || 'var(--indigo-500)'}, ${contact.avatar_color || 'var(--indigo-500)'}80)`,
+                            boxShadow: `0 4px 12px ${contact.avatar_color || 'var(--indigo-500)'}40`
+                          }}
+                        >
+                          {contact.first_name[0]}{contact.last_name[0]}
+                        </div>
+                        <div className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-[var(--emerald-500)] rounded-full border-2 border-[var(--void-800)] flex items-center justify-center">
+                          <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                        </div>
                       </div>
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-[var(--emerald-500)] rounded-full border-2 border-[var(--void-800)]" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="font-medium text-[var(--void-100)] truncate group-hover:text-white transition-colors">
-                        {contact.first_name} {contact.last_name}
-                      </p>
-                      <p className="text-xs text-[var(--void-400)] truncate">{contact.title}</p>
-                      <p className="text-xs text-[var(--void-500)] truncate">{contact.company_name}</p>
+                      <div className="min-w-0">
+                        <p className="font-semibold text-[var(--void-100)] truncate group-hover:text-white transition-colors">
+                          {contact.first_name} {contact.last_name}
+                        </p>
+                        <p className="text-xs text-[var(--void-400)] truncate">{contact.title}</p>
+                        <p className="text-xs text-[var(--void-500)] truncate">{contact.company_name}</p>
+                      </div>
                     </div>
                   </div>
                 ))}

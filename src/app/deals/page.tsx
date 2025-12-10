@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import DealCard from '@/components/DealCard';
-import { Plus, DollarSign, TrendingUp, Target, Sparkles } from 'lucide-react';
+import DealFunnelChart from '@/components/charts/DealFunnelChart';
+import DealVelocityChart from '@/components/charts/DealVelocityChart';
+import RadialChart from '@/components/charts/RadialChart';
+import { Plus, DollarSign, TrendingUp, Target, Sparkles, Brain, Zap } from 'lucide-react';
 import type { Deal } from '@/lib/db';
 
 interface DealWithRelations extends Deal {
@@ -62,11 +65,16 @@ export default function DealsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--void-950)]">
         <div className="flex flex-col items-center gap-4">
-          <div className="relative w-12 h-12">
-            <div className="absolute inset-0 border-2 border-[var(--void-700)] rounded-full" />
-            <div className="absolute inset-0 border-2 border-transparent border-t-[var(--indigo-500)] rounded-full animate-spin" />
+          <div className="relative">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center">
+              <Brain className="w-7 h-7 text-white animate-pulse" />
+            </div>
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)] animate-ping opacity-20" />
           </div>
-          <p className="text-[var(--void-400)] text-sm">Loading deals...</p>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-[var(--void-200)] text-sm font-medium">Analyzing deals...</p>
+            <p className="text-[var(--void-500)] text-xs">AI is processing your pipeline</p>
+          </div>
         </div>
       </div>
     );
@@ -74,12 +82,25 @@ export default function DealsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--void-950)] relative">
-      {/* Ambient effects */}
+      {/* Enhanced ambient effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[var(--purple-500)] rounded-full opacity-[0.03] blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[var(--indigo-500)] rounded-full opacity-[0.03] blur-[100px]" />
+        <div
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[var(--purple-500)] rounded-full opacity-[0.04] blur-[120px]"
+          style={{ animation: 'glow-breathe 8s ease-in-out infinite' }}
+        />
+        <div
+          className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[var(--indigo-500)] rounded-full opacity-[0.04] blur-[100px]"
+          style={{ animation: 'glow-breathe 10s ease-in-out infinite 2s' }}
+        />
+        <div
+          className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[var(--cyan-500)] rounded-full opacity-[0.03] blur-[80px]"
+          style={{ animation: 'glow-breathe 12s ease-in-out infinite 4s' }}
+        />
       </div>
-      <div className="fixed inset-0 bg-grid pointer-events-none opacity-50" />
+      <div className="fixed inset-0 bg-grid pointer-events-none opacity-40" />
+
+      {/* Mesh gradient overlay */}
+      <div className="fixed inset-0 bg-mesh pointer-events-none opacity-20" />
 
       <div className="relative z-10">
         <Header
@@ -118,12 +139,34 @@ export default function DealsPage() {
         />
 
         <div className="p-8 space-y-6">
+          {/* AI Status Banner */}
+          <div className="relative bg-gradient-to-r from-[var(--indigo-500)]/10 via-[var(--purple-500)]/10 to-[var(--cyan-500)]/10 border border-[var(--indigo-500)]/20 rounded-xl px-4 py-3 overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '50ms', animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent" style={{ animation: 'shimmer 3s ease-in-out infinite' }} />
+            <div className="relative flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center">
+                  <Brain className="w-4 h-4 text-white" />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)] animate-pulse opacity-50" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-[var(--void-100)]">Pipeline Intelligence Active</p>
+                  <p className="text-xs text-[var(--void-400)]">AI is analyzing deal patterns and predicting outcomes</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--void-800)]/50 border border-[var(--void-700)] rounded-lg">
+                <Zap className="w-3.5 h-3.5 text-[var(--amber-400)]" />
+                <span className="text-xs font-medium text-[var(--void-300)]">3 insights available</span>
+              </div>
+            </div>
+          </div>
+
           {/* Summary Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 opacity-0 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--indigo-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--indigo-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--indigo-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--indigo-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--indigo-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <DollarSign className="w-5 h-5 text-[var(--indigo-400)]" />
                 </div>
                 <div>
@@ -134,10 +177,11 @@ export default function DealsPage() {
                 </div>
               </div>
             </div>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--cyan-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--cyan-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--cyan-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--cyan-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--cyan-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--cyan-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Target className="w-5 h-5 text-[var(--cyan-400)]" />
                 </div>
                 <div>
@@ -148,10 +192,11 @@ export default function DealsPage() {
                 </div>
               </div>
             </div>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--emerald-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--emerald-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--emerald-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--emerald-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--emerald-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--emerald-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Sparkles className="w-5 h-5 text-[var(--emerald-400)]" />
                 </div>
                 <div>
@@ -164,9 +209,40 @@ export default function DealsPage() {
             </div>
           </div>
 
+          {/* Charts Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 opacity-0 animate-fade-in" style={{ animationDelay: '150ms', animationFillMode: 'forwards' }}>
+            <DealFunnelChart />
+            <DealVelocityChart />
+          </div>
+
+          {/* Target Progress */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 opacity-0 animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
+            <RadialChart
+              value={wonValue}
+              target={1000000}
+              title="Q4 Revenue Target"
+              subtitle="Current quarter"
+              color="#34d399"
+            />
+            <RadialChart
+              value={deals.filter(d => d.stage === 'won').length}
+              target={25}
+              title="Deals Won"
+              subtitle="Target: 25 deals"
+              color="#818cf8"
+            />
+            <RadialChart
+              value={weightedValue}
+              target={750000}
+              title="Weighted Pipeline"
+              subtitle="Qualified opportunities"
+              color="#22d3ee"
+            />
+          </div>
+
           {/* Pipeline View */}
           {view === 'pipeline' && (
-            <div className="flex gap-4 overflow-x-auto pb-4 opacity-0 animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'forwards' }}>
+            <div className="flex gap-4 overflow-x-auto pb-4 opacity-0 animate-fade-in" style={{ animationDelay: '250ms', animationFillMode: 'forwards' }}>
               {stages.map((stage, stageIndex) => {
                 const stageDeals = deals.filter(d => d.stage === stage.key);
                 const stageValue = stageDeals.reduce((sum, d) => sum + (d.value || 0), 0);

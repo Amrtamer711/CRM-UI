@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import Header from '@/components/Header';
 import ActivityItem from '@/components/ActivityItem';
-import { Phone, Mail, Calendar, CheckSquare, Plus, Clock, AlertCircle, Sparkles } from 'lucide-react';
+import ActivityDistributionChart from '@/components/charts/ActivityDistributionChart';
+import ProductivityChart from '@/components/charts/ProductivityChart';
+import ActivityChart from '@/components/charts/ActivityChart';
+import { Phone, Mail, Calendar, CheckSquare, Plus, Clock, AlertCircle, Sparkles, Brain, Zap } from 'lucide-react';
 import type { Activity } from '@/lib/db';
 
 interface ActivityWithRelations extends Activity {
@@ -91,11 +94,16 @@ export default function ActivitiesPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--void-950)]">
         <div className="flex flex-col items-center gap-4">
-          <div className="relative w-12 h-12">
-            <div className="absolute inset-0 border-2 border-[var(--void-700)] rounded-full" />
-            <div className="absolute inset-0 border-2 border-transparent border-t-[var(--indigo-500)] rounded-full animate-spin" />
+          <div className="relative">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--amber-500)] to-[var(--rose-500)] flex items-center justify-center">
+              <Brain className="w-7 h-7 text-white animate-pulse" />
+            </div>
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[var(--amber-400)] to-[var(--rose-400)] animate-ping opacity-20" />
           </div>
-          <p className="text-[var(--void-400)] text-sm">Loading activities...</p>
+          <div className="flex flex-col items-center gap-1">
+            <p className="text-[var(--void-200)] text-sm font-medium">Loading activities...</p>
+            <p className="text-[var(--void-500)] text-xs">AI is organizing your schedule</p>
+          </div>
         </div>
       </div>
     );
@@ -103,12 +111,23 @@ export default function ActivitiesPage() {
 
   return (
     <div className="min-h-screen bg-[var(--void-950)] relative">
-      {/* Ambient effects */}
+      {/* Enhanced ambient effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[var(--amber-500)] rounded-full opacity-[0.02] blur-[100px]" />
-        <div className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[var(--purple-500)] rounded-full opacity-[0.03] blur-[80px]" />
+        <div
+          className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-[var(--amber-500)] rounded-full opacity-[0.04] blur-[100px]"
+          style={{ animation: 'glow-breathe 8s ease-in-out infinite' }}
+        />
+        <div
+          className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-[var(--purple-500)] rounded-full opacity-[0.04] blur-[80px]"
+          style={{ animation: 'glow-breathe 10s ease-in-out infinite 2s' }}
+        />
+        <div
+          className="absolute top-0 right-0 w-[350px] h-[350px] bg-[var(--emerald-500)] rounded-full opacity-[0.03] blur-[70px]"
+          style={{ animation: 'glow-breathe 12s ease-in-out infinite 4s' }}
+        />
       </div>
-      <div className="fixed inset-0 bg-grid pointer-events-none opacity-50" />
+      <div className="fixed inset-0 bg-grid pointer-events-none opacity-40" />
+      <div className="fixed inset-0 bg-mesh pointer-events-none opacity-20" />
 
       <div className="relative z-10">
         <Header
@@ -123,12 +142,34 @@ export default function ActivitiesPage() {
         />
 
         <div className="p-8 space-y-6">
+          {/* AI Status Banner */}
+          <div className="relative bg-gradient-to-r from-[var(--amber-500)]/10 via-[var(--rose-500)]/10 to-[var(--purple-500)]/10 border border-[var(--amber-500)]/20 rounded-xl px-4 py-3 overflow-hidden opacity-0 animate-fade-in" style={{ animationDelay: '50ms', animationFillMode: 'forwards' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent" style={{ animation: 'shimmer 3s ease-in-out infinite' }} />
+            <div className="relative flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--amber-500)] to-[var(--rose-500)] flex items-center justify-center">
+                  <Brain className="w-4 h-4 text-white" />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-[var(--amber-400)] to-[var(--rose-400)] animate-pulse opacity-50" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-[var(--void-100)]">Smart Scheduling Active</p>
+                  <p className="text-xs text-[var(--void-400)]">AI is optimizing your activity prioritization</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--void-800)]/50 border border-[var(--void-700)] rounded-lg">
+                <Zap className="w-3.5 h-3.5 text-[var(--amber-400)]" />
+                <span className="text-xs font-medium text-[var(--void-300)]">{overdueCount > 0 ? `${overdueCount} need attention` : 'All on track'}</span>
+              </div>
+            </div>
+          </div>
+
           {/* Summary Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 opacity-0 animate-fade-in" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--amber-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--amber-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--amber-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--amber-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--amber-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--amber-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Clock className="w-5 h-5 text-[var(--amber-400)]" />
                 </div>
                 <div>
@@ -137,10 +178,11 @@ export default function ActivitiesPage() {
                 </div>
               </div>
             </div>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--rose-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--rose-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--rose-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--rose-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--rose-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--rose-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <AlertCircle className="w-5 h-5 text-[var(--rose-400)]" />
                 </div>
                 <div>
@@ -149,10 +191,11 @@ export default function ActivitiesPage() {
                 </div>
               </div>
             </div>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--indigo-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--indigo-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--indigo-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--indigo-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--indigo-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--indigo-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <CheckSquare className="w-5 h-5 text-[var(--indigo-400)]" />
                 </div>
                 <div>
@@ -161,10 +204,11 @@ export default function ActivitiesPage() {
                 </div>
               </div>
             </div>
-            <div className="relative bg-[var(--void-800)]/60 backdrop-blur-sm border border-[var(--void-700)] rounded-xl p-5 overflow-hidden">
-              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--emerald-500)] rounded-full opacity-10 blur-[40px]" />
+            <div className="group relative bg-[var(--void-800)]/60 backdrop-blur-xl border border-[var(--void-700)] rounded-xl p-5 overflow-hidden hover:border-[var(--emerald-500)]/30 transition-all">
+              <div className="absolute -top-10 -right-10 w-24 h-24 bg-[var(--emerald-500)] rounded-full opacity-15 blur-[40px] group-hover:opacity-30 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--emerald-500)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="relative z-10 flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-[var(--emerald-500)]/15 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[var(--emerald-500)]/15 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Sparkles className="w-5 h-5 text-[var(--emerald-400)]" />
                 </div>
                 <div>
@@ -172,6 +216,15 @@ export default function ActivitiesPage() {
                   <p className="text-2xl font-display font-bold text-[var(--void-50)] mt-0.5">{completedCount}</p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Charts Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 opacity-0 animate-fade-in" style={{ animationDelay: '150ms', animationFillMode: 'forwards' }}>
+            <ActivityDistributionChart />
+            <ProductivityChart />
+            <div className="lg:col-span-1">
+              <ActivityChart />
             </div>
           </div>
 
