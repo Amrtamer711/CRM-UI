@@ -14,6 +14,7 @@ import {
   Sparkles,
   Command,
   Zap,
+  Brain,
 } from 'lucide-react';
 
 const navigation = [
@@ -30,9 +31,10 @@ const bottomNav = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const isAIChatActive = pathname === '/ai-chat';
 
   return (
-    <aside className="fixed left-0 top-0 h-screen w-[260px] bg-[var(--void-950)]/90 backdrop-blur-2xl border-r border-[var(--void-800)] flex flex-col z-50">
+    <aside className="fixed left-0 top-0 h-screen w-[260px] bg-[var(--void-950)]/90 backdrop-blur-2xl border-r border-[var(--void-800)] flex flex-col z-[100]">
       {/* Neural network background pattern */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Animated glow orbs */}
@@ -160,6 +162,50 @@ export default function Sidebar() {
           })}
         </ul>
       </nav>
+
+      {/* AI Chat Link */}
+      <div className="px-3 py-2">
+        <Link
+          href="/ai-chat"
+          className={`
+            relative w-full flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-300 group overflow-hidden
+            ${isAIChatActive
+              ? 'bg-gradient-to-r from-[var(--indigo-500)]/20 to-[var(--purple-500)]/20 text-white border border-[var(--indigo-500)]/30'
+              : 'text-[var(--void-300)] hover:text-white bg-gradient-to-r from-[var(--indigo-500)]/10 to-[var(--purple-500)]/10 hover:from-[var(--indigo-500)]/20 hover:to-[var(--purple-500)]/20 border border-[var(--void-700)] hover:border-[var(--indigo-500)]/30'
+            }
+          `}
+        >
+          {/* Animated gradient background */}
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-[var(--indigo-500)]/0 via-[var(--purple-500)]/10 to-[var(--indigo-500)]/0 opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ animation: 'shimmer 2s ease-in-out infinite' }}
+          />
+
+          <div className="relative z-10 w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--indigo-500)] to-[var(--purple-500)] flex items-center justify-center shadow-lg shadow-[var(--indigo-500)]/20 group-hover:shadow-[var(--indigo-500)]/40 transition-all">
+            <Brain className="w-4 h-4 text-white" />
+            {/* Pulse effect */}
+            <div
+              className="absolute inset-0 rounded-lg bg-gradient-to-br from-[var(--indigo-400)] to-[var(--purple-400)]"
+              style={{ animation: 'pulse-ring 2s ease-out infinite' }}
+            />
+          </div>
+
+          <div className="relative z-10 flex-1 text-left">
+            <span className="font-semibold">AI Assistant</span>
+            <p className="text-[10px] text-[var(--void-400)] group-hover:text-[var(--void-300)]">Ask anything about your CRM</p>
+          </div>
+
+          {/* Sparkle indicator */}
+          <div className="relative z-10">
+            <Sparkles className="w-4 h-4 text-[var(--amber-400)]" style={{ animation: 'glow-breathe 2s ease-in-out infinite' }} />
+          </div>
+
+          {/* Active indicator */}
+          {isAIChatActive && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-8 bg-gradient-to-b from-[var(--indigo-400)] to-[var(--purple-500)] rounded-r-full shadow-[0_0_12px_var(--indigo-500)]" />
+          )}
+        </Link>
+      </div>
 
       {/* Bottom section */}
       <div className="p-3 border-t border-[var(--void-800)]">
